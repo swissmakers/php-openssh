@@ -27,7 +27,7 @@ class PublicKeyTest extends TestCase
         $this->assertInstanceOf(PublicKey::class, $key);
     }
 
-    public function providesPublicKeyToTest(): \Generator
+    public static function providesPublicKeyToTest(): \Generator
     {
         yield 'RSA public key' => [
             'id_rsa.pub',

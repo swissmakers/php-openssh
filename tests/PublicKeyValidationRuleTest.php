@@ -24,7 +24,7 @@ class PublicKeyValidationRuleTest extends TestCase
         $this->assertTrue($validator->passes());
     }
 
-    public function providesPublicKeyToTest(): \Generator
+    public static function providesPublicKeyToTest(): \Generator
     {
         yield 'RSA public key' => [
             'id_rsa.pub',

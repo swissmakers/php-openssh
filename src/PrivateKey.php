@@ -88,7 +88,7 @@ class PrivateKey
      */
     public function getPublicKey(): PublicKey
     {
-        return PublicKey::fromString($this->key->getPublicKey());
+        return PublicKey::fromString($this->key->getPublicKey()->__toString());
     }
 
     public function toFile(string $filename): void

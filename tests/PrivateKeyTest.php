@@ -49,8 +49,9 @@ class PrivateKeyTest extends TestCase
     public function it_should_return_the_associated_public_key(): void
     {
         $key = PrivateKey::fromFile($this->getStub('id_rsa'));
+        $publicKey = $key->getPublicKey();
 
-        $this->assertInstanceOf(PublicKey::class, $key->getPublicKey());
+        $this->assertInstanceOf(PublicKey::class, $publicKey);
     }
 
     /** @test */
