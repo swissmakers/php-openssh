@@ -1,0 +1,40 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - 'main'
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.2,8.3]
+
+    name: PHP ${{ matrix.php }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Build and test with Docker
+        run: |
+          docker run --rm -v $(pwd):/app -w /app rockylinux:8 bash -c "
+          yum install -y epel-release &&
+          yum install -y php php-cli php-zip php-xml php-mbstring php-pdo php-json composer &&
+          composer install &&
+          vendor/bin/phpunit"
